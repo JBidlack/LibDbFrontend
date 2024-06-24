@@ -1,0 +1,29 @@
+body{
+  background-color:rgba(26, 91, 77, 0.7);
+  margin:0;
+}
+.mainDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login{
+  padding:2em;
+  max-width: 50vh;
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: darkslategrey;
+  color:white;
+  border-radius: 20px;
+}
+
+.un{
+  margin-bottom: 0.5em;
+}
+
+.pw{
+  margin-bottom: 0.5em;;
+}
