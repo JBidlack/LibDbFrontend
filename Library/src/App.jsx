@@ -8,7 +8,16 @@ function App() {
 
   return (
     <>
-      <form typeof='login'>
+      <form typeof='login' className='flex'>
+        
+        <div className='flex'>
+          <label htmlFor="username" className='flexpr-2'>Username: </label>
+          <input className="username" type="text" />
+        </div>
+        <div className=''>
+          <label htmlFor="password">Password: </label>
+          <input className="password" type="password" />
+        </div>
         
       </form>
     </>
