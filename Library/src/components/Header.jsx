@@ -33,7 +33,7 @@ const Header = () => {
             </ul>
             <div className='pr-4'>
                 <button className='bg-darkbrown text-stone-300 px-4 py-2 rounded-xl hover:bg-brown'>
-                    {isLoggedIn ? 'Sign Out':'Sign In' }
+                    {isLoggedIn ? 'Sign Out': <Link to="/login" >Sign In</Link> }
                 </button>
             </div>
         </nav>

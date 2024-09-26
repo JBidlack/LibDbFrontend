@@ -13,30 +13,33 @@ const Login = () => {
       const member = {
         username,
         password,
+        name,
       };
   
       try{
-        const res = await fetch('http://localhost:8080//api/auth/login', {
+        const res = await fetch('http://localhost:8080/api/auth/login', {
           method: 'POST',
           headers:{
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(member),
         });
-  
+
         if (res.ok){
+
           const result = await res.json();
+
           const{ sessionCode } = result;
-  
-          navigate(`/dashboard?sessionCode=${sessionCode}`);
+          localStorage.setItem('sessionCode', sessionCode);
+          navigate(`/dashboard`);
         }
         else{
           const error = await res.json();
-          setErrorMsg(error.message || 'Login Failed');
+          setErrorMsg(error?.message || 'Login Failed');
         }
       } 
       catch(error){
-        setErrorMsg('A system error occured. Please notify an admin');
+        setErrorMsg('A system error occured. Please notify an admin' + error.message);
       }
     };
   
@@ -68,7 +71,7 @@ const Login = () => {
             </div>
             {errorMsg && <p className='error text-red-500 font-extrabold text-xl'>{errorMsg}</p>}
             
-            <button className='bg-lightbrown rounded-md text-stone-300 font-semibold font-sans text-lg'>Submit</button>
+            <button type='submit' className='bg-lightbrown rounded-md text-stone-300 font-semibold font-sans text-lg'>Submit</button>
             <span className='flex justify-center text-blue-500 hover:underline hover:text-blue-300 pt-4'><a href='./signup'>Not a member yet?</a></span>
             <span className='flex justify-center text-blue-500 hover:underline hover:text-blue-300'><a href='./signup'>Sign up here!</a></span>
         </form>
