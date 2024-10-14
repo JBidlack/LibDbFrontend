@@ -3,15 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../util/AuthProvider';
 
 const UserDashboard = ({children}) => {
+ 
   const navigate = useNavigate();
   const { isAuthenticated, userData} = useAuth();
   
-  if(!isAuthenticated){
-    navigate("/login");
-  }
-
+  useEffect(() =>{
+    if(!isAuthenticated){
+      navigate("/login");
+    }
+    if(userData){
+      
+    }
+  }, []
+)
   return (
-    <div>{userData?.name}</div>
+    <div>
+      <h1>Welcome back {userData?.name}!</h1>
+    </div>
   )
 }
 

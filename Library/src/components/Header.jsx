@@ -2,14 +2,11 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SiTestinglibrary } from "react-icons/si"
 import vlogo from '../assets/vlogo.svg'
+import { useAuth } from './util/AuthProvider';
 
 const Header = () => {
-    const[isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isAuthenticated, userData} = useAuth();
 
-    const checkSession = () => {
-        const session = sessionStorage.getItem('sessionCode');
-        setIsLoggedIn(!!session);
-    }
 
   return (
     <header className='m-0 border-b-2 border-darkbrown'>
@@ -24,7 +21,12 @@ const Header = () => {
                     Home
                     </Link>
                 </li> 
-                <li className='text-darkbrown text-lg'>
+                <li className='px-4 text-darkbrown text-lg'>
+                    <Link to={"/dashboard"}>
+                    Dashboard
+                    </Link>
+                </li>
+                <li className='px-4 text-darkbrown text-lg'>
                     <Link to={"/"}>
                     My Books
                     </Link>
@@ -33,7 +35,7 @@ const Header = () => {
             </ul>
             <div className='pr-4'>
                 <button className='bg-darkbrown text-stone-300 px-4 py-2 rounded-xl hover:bg-brown'>
-                    {isLoggedIn ? 'Sign Out': <Link to="/login" >Sign In</Link> }
+                    {isAuthenticated ? 'Sign Out': <Link to="/login" >Sign In</Link> }
                 </button>
             </div>
         </nav>

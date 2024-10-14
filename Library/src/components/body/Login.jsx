@@ -43,10 +43,9 @@ const Login = () => {
           const memberData = JSON.parse(member);
 
           login({           
-            name: memberData.email,
+            name: memberData.name,
+            email:memberData.email,
           });
-
-          console.log(memberData.email);
 
           navigate(`/dashboard`);
         }
