@@ -1,7 +1,15 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../util/AuthProvider';
+
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+};
 
 const Login = () => {
+    const { login } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const[errorMsg, setErrorMsg] = useState('');
@@ -9,11 +17,12 @@ const Login = () => {
   
     const authenticate = async (e) => {
       e.preventDefault();
+
+      const csrfToken = getCookie('XSRF-TOKEN');
   
       const member = {
         username,
         password,
-        name,
       };
   
       try{
@@ -23,14 +32,22 @@ const Login = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(member),
+          credentials: 'include',
         });
 
+
         if (res.ok){
+          const data = await res.json();
 
-          const result = await res.json();
+          const { member } = data;
+          const memberData = JSON.parse(member);
 
-          const{ sessionCode } = result;
-          localStorage.setItem('sessionCode', sessionCode);
+          login({           
+            name: memberData.email,
+          });
+
+          console.log(memberData.email);
+
           navigate(`/dashboard`);
         }
         else{
