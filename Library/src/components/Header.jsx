@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SiTestinglibrary } from "react-icons/si"
 import vlogo from '../assets/vlogo.svg'
-import { useAuth } from './util/AuthProvider';
+import { useAuth } from './util/AuthContext';
 
 const Header = () => {
     const { isAuthenticated, userData} = useAuth();

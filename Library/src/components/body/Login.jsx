@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../util/AuthProvider';
+import { useAuth } from '../util/AuthContext';
+import { encryptData } from '../util/Encrypt';
 
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
@@ -19,14 +20,18 @@ const Login = () => {
       e.preventDefault();
 
       const csrfToken = getCookie('XSRF-TOKEN');
+
+      const encryptedUsername = encryptData(username);
+      const encryptedPassword = encryptData(password);
   
       const member = {
-        username,
-        password,
+        username: encryptedUsername,
+        password: encryptedPassword,
       };
   
       try{
-        const res = await fetch('http://localhost:8080/api/auth/login', {
+        console.log(member.username)
+        const res = await fetch('http://localhost:8080/api/members/login', {
           method: 'POST',
           headers:{
             'Content-Type': 'application/json',

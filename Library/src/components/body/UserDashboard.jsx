@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../util/AuthProvider';
+import { useAuth } from '../util/AuthContext';
 
 const UserDashboard = ({children}) => {
  
@@ -12,7 +12,7 @@ const UserDashboard = ({children}) => {
       navigate("/login");
     }
     if(userData){
-      
+
     }
   }, []
 )

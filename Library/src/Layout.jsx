@@ -5,10 +5,10 @@ import { Outlet } from 'react-router-dom'
 const Layout = () => {
   return (
     <>
-        <Header/>
-        <main className='bg-lightbrown m-0'>
-            <Outlet/>
-        </main>
+      <main className='bg-lightbrown m-0'>
+          <Header/>
+          <Outlet/>
+      </main>
     </>
   )
 }
