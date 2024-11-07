@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Login from './components/body/Login';
+import SignUp from './components/body/SignUp';
 import Index from './components/body/Index';
 import Layout from './Layout';
 import UserDashboard from './components/body/UserDashboard';
-import { AuthProvider } from './components/util/AuthProvider';
+import useAuthCheck from './components/util/useAuthCheck';
 
-function App() {
+// const SecureLink= ({element}) =>{
+//   const isAuthenticated = useAuthCheck();
+//   return isAuthenticated ? element : <Navigate to="/login"/>; 
+// }
+
+const App = () => {
+  
   return(
-    <AuthProvider>
-    <Routes>
-      <Route path='/' element={<Layout/>}>
-        <Route index element={<Index/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/dashboard' element={<UserDashboard/>}/>
-      </Route>
-    </Routes>
-    </AuthProvider>
+    
+      <Routes>
+        <Route path='/' element={<Layout/>}>
+          <Route index element={<Index/>}/>
+          <Route path='/signup' element={<SignUp/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/dashboard' element={<UserDashboard/>}/>
+        </Route>
+      </Routes>
   );
 }
 

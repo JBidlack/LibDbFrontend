@@ -1,32 +1,36 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../util/AuthProvider';
+import { encryptData } from '../util/Encrypt';
 
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
 };
 
 const Login = () => {
-    const { login } = useAuth();
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [token, setToken] = useState('');
     const[errorMsg, setErrorMsg] = useState('');
     const navigate = useNavigate();
   
     const authenticate = async (e) => {
       e.preventDefault();
 
-      const csrfToken = getCookie('XSRF-TOKEN');
+      const encryptedPassword = encryptData(password);
   
       const member = {
-        username,
-        password,
+        username: username,
+        password: encryptedPassword,
       };
   
       try{
-        const res = await fetch('http://localhost:8080/api/auth/login', {
+        const res = await fetch('http://localhost:8080/api/members/login', {
           method: 'POST',
           headers:{
             'Content-Type': 'application/json',
@@ -39,13 +43,7 @@ const Login = () => {
         if (res.ok){
           const data = await res.json();
 
-          const { member } = data;
-          const memberData = JSON.parse(member);
-
-          login({           
-            name: memberData.name,
-            email:memberData.email,
-          });
+          localStorage.setItem('user', JSON.stringify(data));
 
           navigate(`/dashboard`);
         }
