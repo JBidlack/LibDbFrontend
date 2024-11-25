@@ -14,7 +14,7 @@ const useAuthCheck = () => {
   const [userData, setUserData] = useState('');
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('user');
+  const token = sessionStorage.getItem('user');
   useEffect(() => {
     if(token){
       const data = JSON.parse(token);

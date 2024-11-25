@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import useAuthCheck from '../util/useAuthCheck';
 
+
 const UserDashboard = ({children}) => {
  
   const navigate = useNavigate();
@@ -10,9 +11,15 @@ const UserDashboard = ({children}) => {
   const userName = userData.name ? userData.name.replace(/^"|"$/g, ''): '';
   const userEmail = userData.email ? userData.email.replace(/^"|"$/g, ''): '';
 
-  if(!userData) {
-    navigate('/login');
+  const res = () => {
+    
   }
+
+  useEffect(() => {
+    if(!userData) {
+      navigate('/login');
+    }
+  }, [userData, navigate]);
   
 
 

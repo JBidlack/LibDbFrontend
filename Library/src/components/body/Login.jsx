@@ -11,6 +11,7 @@ const getCookie = (name) => {
 
 const Login = () => {
 
+    const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
@@ -43,7 +44,8 @@ const Login = () => {
         if (res.ok){
           const data = await res.json();
 
-          localStorage.setItem('user', JSON.stringify(data));
+          sessionStorage.setItem('user', JSON.stringify(data));
+          sessionStorage.setItem('token', data.token);
 
           navigate(`/dashboard`);
         }
@@ -77,7 +79,7 @@ const Login = () => {
             <div className='pb-6 flex flex-col'>
                 <label htmlFor="password" className='pr-2 text-stone-300 font-semibold font-sans text-lg'>Password: </label>
                 <input className="password rounded-md p-1" 
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id='password'
                     value={password}
                     onChange={(e)=> setPassword(e.target.value)}

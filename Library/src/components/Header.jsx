@@ -6,12 +6,14 @@ import useAuthCheck from './util/useAuthCheck';
 
 const Header = () => {
     const navigate = useNavigate();
-    const userData = localStorage.getItem('user');
+    const userData = sessionStorage.getItem('user');
     const isAuthenticated = !!userData;
 
     const logout = () => {
-        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        localStorage.removeItem('user');
+        document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "JSESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
         navigate('/');
     }
 
