@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const getCookie = (name) => {
-  const value = `;${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) {
-    return parts.pop().split(';').shift();
+const parsejwt =(token) => {
+  try{
+    const base64Pay = token.split('.')[1];
+    const base64 = base64Pay.replace(/-/g, '+').replace(/_/g, '/');
+    const decoded = base64.parse(atob(base64));
+    return decoded;
   }
-  return null;
+  catch (error) {
+    console.error('Failed to parse');
+    return null;
+  }
 }
 
 const useAuthCheck = () => {
@@ -17,8 +21,8 @@ const useAuthCheck = () => {
   const token = sessionStorage.getItem('user');
   useEffect(() => {
     if(token){
-      const data = JSON.parse(token);
-        if(data){
+      const data = parsejwt(token);
+        if(data && (!data.exp || data.exp * 1000 > Date.now())){
           setUserData(data);
         }
         else{
