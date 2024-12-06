@@ -44,8 +44,8 @@ const Login = () => {
         if (res.ok){
           const data = await res.json();
 
-          sessionStorage.setItem('user', JSON.stringify(data));
-          sessionStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data));
+          localStorage.setItem('token', data.token);
 
           navigate(`/dashboard`);
         }
@@ -61,8 +61,8 @@ const Login = () => {
   
   
     return (
-      <div className='bg-lightbrown m-0 flex justify-center h-screen items-center'>
-        <form typeof='login' className='flex flex-col bg-darkbrown min-w-40 w-auto h-auto p-20 pt-10 px-24 shadow-lg shadow-zinc-500 rounded-lg'
+      <div className='bg-brown-lightbrown m-0 flex justify-center h-screen items-center'>
+        <form typeof='login' className='flex flex-col bg-brown-darkbrown min-w-40 w-auto h-auto p-20 pt-10 px-24 shadow-lg shadow-zinc-500 rounded-lg'
               onSubmit={authenticate}>
             <div className='flex justify-center pt-0'>
                 <span className='text-4xl font-extrabold text-stone-400'>Sign In</span>

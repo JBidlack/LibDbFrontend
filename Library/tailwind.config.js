@@ -8,9 +8,16 @@ export default {
   theme: {
     extend: {
       colors:{
-        lightbrown: 'rgb(196, 164, 132)',
-        darkbrown: 'rgb(92, 64, 51)',
-        brown: 'rgb(139,69,19)',
+        gold: '#d4af37',
+        brown: {
+          500: '#8b5e2b',
+          600: '#6b4e24',
+          700: '#6b4e24',
+          lightbrown: 'rgb(196, 164, 132)',
+          darkbrown: 'rgb(92, 64, 51)',
+          avgbrown: 'rgb(139,69,19)',
+        },
+        
       },
       fontSize:{
         xxl: '2em',

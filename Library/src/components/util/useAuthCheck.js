@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+let user = {
+  id: '',
+  name: '',
+  username: '',
+  email: '',
+}
 const parsejwt =(token) => {
   try{
     const base64Pay = token.split('.')[1];
-    const base64 = base64Pay.replace(/-/g, '+').replace(/_/g, '/');
-    const decoded = base64.parse(atob(base64));
-    return decoded;
+    
+    const decoded = atob(base64Pay.replace(/-/g, '+').replace(/_/g, '/'));
+    const data = JSON.parse(decoded)
+    return JSON.parse(decoded);
   }
   catch (error) {
     console.error('Failed to parse');
@@ -15,26 +22,38 @@ const parsejwt =(token) => {
 }
 
 const useAuthCheck = () => {
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
-  const token = sessionStorage.getItem('user');
-  useEffect(() => {
+  const token = localStorage.getItem('token');
+  // useEffect(() => {
     if(token){
       const data = parsejwt(token);
         if(data && (!data.exp || data.exp * 1000 > Date.now())){
-          setUserData(data);
+          const userInfo = JSON.parse(data.sub);
+          user.id = userInfo.id;
+          user.email = userInfo.email;
+          user.name = userInfo.name;
+          user.username = userInfo.username
+          setUserData(user);
         }
         else{
           navigate('/login');
         }
-
     }
     else{
       navigate('/login');
     }
-  }, [navigate]);
-  return userData;
+  // }, [navigate]);
+
+  // useEffect(() => {
+  //   if (userData) {
+  //     console.log("User data has been updated:", userData);
+  //   }
+  // }, [userData]);
+  
+
+  return user;
 };
 
 export default useAuthCheck;

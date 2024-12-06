@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 const Layout = () => {
   return (
     <>
-      <main className='bg-lightbrown m-0'>
+      <main className='bg-token m-0'>
           <Header/>
           <Outlet/>
       </main>

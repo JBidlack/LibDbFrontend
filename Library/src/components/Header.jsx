@@ -6,19 +6,19 @@ import useAuthCheck from './util/useAuthCheck';
 
 const Header = () => {
     const navigate = useNavigate();
-    const userData = sessionStorage.getItem('user');
-    const isAuthenticated = !!userData;
+    const token = sessionStorage.getItem('token');
+    const isAuthenticated = !!token;
 
     const logout = () => {
         document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "JSESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        sessionStorage.removeItem('user');
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         navigate('/');
     }
 
   return (
-    <header className='m-0 border-b-2 border-darkbrown'>
+    <header className='m-0 bg-transparent'>
         <nav className='flex justify-between items-center w-full pt-4 pb-4'>
             <div className='pl-4'>
                 <img src={vlogo} alt='Logo' className='h-20 text-darkbrown'/>
@@ -45,9 +45,9 @@ const Header = () => {
             <div className='pr-4'>
                 
                     {isAuthenticated ? 
-                    (<button className='bg-darkbrown text-stone-300 px-4 py-2 rounded-xl hover:bg-brown font-special' 
+                    (<button className='bg-brown-darkbrown text-stone-300 px-4 py-2 rounded-xl hover:bg-brown-avgbrown font-special' 
                     onClick={logout}>Sign Out</button>): 
-                    (<Link to="/login" className='bg-darkbrown text-stone-300 px-4 py-2 rounded-xl hover:bg-brown font-special'>Sign In</Link>) }
+                    (<Link to="/login" className='bg-brown-darkbrown text-stone-300 px-4 py-2 rounded-xl hover:bg-brown-avgbrown font-special'>Sign In</Link>) }
 
             </div>
         </nav>
