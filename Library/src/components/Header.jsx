@@ -6,7 +6,7 @@ import useAuthCheck from './util/useAuthCheck';
 
 const Header = () => {
     const navigate = useNavigate();
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     const isAuthenticated = !!token;
 
     const logout = () => {
@@ -18,7 +18,7 @@ const Header = () => {
     }
 
   return (
-    <header className='m-0 bg-transparent'>
+    <header className='m-0 bg-brown-lightbrown'>
         <nav className='flex justify-between items-center w-full pt-4 pb-4'>
             <div className='pl-4'>
                 <img src={vlogo} alt='Logo' className='h-20 text-darkbrown'/>

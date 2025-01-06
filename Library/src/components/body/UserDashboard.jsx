@@ -1,25 +1,29 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import useAuthCheck from '../util/useAuthCheck';
 
 
-const UserDashboard = ({children}) => {
+const UserDashboard = () => {
  
   const navigate = useNavigate();
   const userData = useAuthCheck();
 
+  if (!userData) {
+    return null; // or show a loading spinner until userData is available
+  }
+
   const userName = userData.name ? userData.name.replace(/^"|"$/g, ''): '';
   const userEmail = userData.email ? userData.email.replace(/^"|"$/g, ''): '';
 
-  const res = () => {
+  // const res = () => {
     
-  }
+  // }
 
-  useEffect(() => {
-    if(!userData) {
-      navigate('/login');
-    }
-  }, [userData, navigate]);
+  // useEffect(() => {
+  //   if(userData === null || userData === undefined || userName ==="") {
+  //     navigate('/login');
+  //   }
+  // }, [userData, navigate, userName]);
   
 
 
