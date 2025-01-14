@@ -1,12 +1,14 @@
 import React, { useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-import useAuthCheck from '../util/useAuthCheck';
+import useAuthCheck, { parsejwt, updateExp } from '../util/useAuthCheck';
 
 
 const UserDashboard = () => {
  
+  updateExp(localStorage.getItem('token'));
   const navigate = useNavigate();
   const userData = useAuthCheck();
+
 
   if (!userData) {
     return null; // or show a loading spinner until userData is available
@@ -15,15 +17,6 @@ const UserDashboard = () => {
   const userName = userData.name ? userData.name.replace(/^"|"$/g, ''): '';
   const userEmail = userData.email ? userData.email.replace(/^"|"$/g, ''): '';
 
-  // const res = () => {
-    
-  // }
-
-  // useEffect(() => {
-  //   if(userData === null || userData === undefined || userName ==="") {
-  //     navigate('/login');
-  //   }
-  // }, [userData, navigate, userName]);
   
 
 

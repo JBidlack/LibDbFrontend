@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { SiTestinglibrary } from "react-icons/si"
 import vlogo from '../assets/vlogo.svg'
-import useAuthCheck from './util/useAuthCheck';
+import  {checkExp} from './util/useAuthCheck';
 
 const Header = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    const isAuthenticated = !!token;
+    const isAuthenticated = checkExp(token);
 
     const logout = () => {
         document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

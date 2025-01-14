@@ -7,13 +7,75 @@ let user = {
   username: '',
   email: '',
 }
-const parsejwt =(token) => {
+
+export const parsejwt =(token) => {
   try{
-    const base64Pay = token.split('.')[1];
-    
-    const decoded = atob(base64Pay.replace(/-/g, '+').replace(/_/g, '/'));
-    const data = JSON.parse(decoded)
-    return data;
+    if (token !== null){
+      const base64Pay = token.split('.')[1];
+      
+      const decoded = atob(base64Pay.replace(/-/g, '+').replace(/_/g, '/'));
+      const data = JSON.parse(decoded)
+      return data;
+    } 
+    return null;
+  }
+  catch (error) {
+    console.error('Failed to parse');
+    return null;
+  }
+}
+
+export const checkExp = (token) => {
+  try{
+    if (token !== null){
+      const base64Pay = token.split('.')[1];
+      
+      const decoded = atob(base64Pay.replace(/-/g, '+').replace(/_/g, '/'));
+      const data = JSON.parse(decoded);
+      if(data.exp < Date.now()){
+        return true;
+      }
+    } 
+    return false;
+  }
+  catch (error) {
+    console.error('Failed to parse');
+    return null;
+  }
+}
+
+export const updateExp = (token) => {
+  try{
+    if (token !== null){
+      const base64Pay = token.split('.')[1];
+      
+      const decoded = atob(base64Pay.replace(/-/g, '+').replace(/_/g, '/'));
+      const data = JSON.parse(decoded);
+      if(data.exp < Date.now()){
+        setTimeout(() => {
+          fetch('http://localhost:8080/api/members/token', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'aplication/json',
+            },
+            body: JSON.stringify({token: localStorage.getItem('token')}),
+          })
+          .then((res) => {
+            if(!res.ok) {
+              throw new Error("An error has occured. Please contact and administrator");
+            }
+            return res.text();
+          })
+          .then((newToken) => {
+            localStorage.setItem('token', newToken);
+          })
+
+        }, data.exp-5*60*1000);
+      }
+      else{
+        navigate('/login');
+      }
+    }
   }
   catch (error) {
     console.error('Failed to parse');
@@ -47,13 +109,6 @@ const useAuthCheck = () => {
         navigate('/login');
       }
     }, [navigate]);
-  // }, [navigate]);
-
-  // useEffect(() => {
-  //   if(userData === null || userData === undefined || userData.name ==="") {
-  //     navigate('/login');
-  //   }
-  // }, [userData, navigate]);
   
 
   return userData;
